@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipes associated to a user</title>
+</head>
+<body>
+    <h1> Welcome {{ user.first_name }}</h1>
+    <h2> These are the recipes</h2>
+    <a href="/user/logout">logout</a>
+    <a href="/recipes">Create</a>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Under 30 Minutes?</th>
+            <th>Actions</th>
+            <th>Recipe Created By:</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for recipe in recipes %}
+            <tr>
+                <td> {{recipe.name}} </td>
+                {% if recipe.under_30_mins == 1 %}
+                <td> yes </td>
+                {% else %}
+                <td> no </td>
+                {% endif %}
+                <td>
+                    <a href="/recipe/{{recipe.id}}">view instructions</a>
+                    {% if recipe.user_id == user.id %}
+                    <a href="/recipe/{{recipe.id}}/edit">edit</a>
+                    <a href="/recipe/{{recipe.id}}/delete">delete</a>
+                </td>
+                <td> {{user.id}} </td>
+                    {% else %}
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+        
+    </table>
+</body>
+</html>
